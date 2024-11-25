@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Form</title>
+</head>
+<body>
+<h2 th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></h2>
+<form th:action="@{/api/employees/saveEmployee}" th:object="${employee}" method="post">
+    <label for="name">Name: </label>
+    <input type="text" id="name" th:field="*{name}" required />
+    <br/>
+
+    <label for="department">Department: </label>
+    <select id="department" th:field="*{department.id}" required>
+        <option th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="${department.name}"></option>
+    </select>
+    <br/>
+
+    <button type="submit">Save</button>
+    <button type="button" onclick="window.location.href='/employees'">Cancel</button>
+</form>
+</body>
+</html>

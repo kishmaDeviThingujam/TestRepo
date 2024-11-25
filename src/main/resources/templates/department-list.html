@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Department List</title>
+</head>
+<body>
+<h2>Department List</h2>
+<button onclick="window.location.href='/departments/new'">Add Department</button>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="department : ${departments}">
+        <td th:text="${department.name}"></td>
+        <td>
+            <button onclick="editDepartment([[${department.id}]])">Edit</button>
+            <button onclick="deleteDepartment([[${department.id}]])">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function deleteDepartment(id) {
+        $.ajax({
+            url: '/api/departments/' + id,
+            type: 'DELETE',
+            success: function(result) {
+                location.reload();
+            }
+        });
+    }
+
+    function editDepartment(id) {
+        window.location.href = '/departments/edit/' + id;
+    }
+</script>
+</body>
+</html>
